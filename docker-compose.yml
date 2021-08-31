@@ -1,0 +1,21 @@
+version: '3.6'
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    depends_on: 
+      - db
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+  db:
+    image: postgres
+    environment: 
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    container_name: shopapp_db_cont
